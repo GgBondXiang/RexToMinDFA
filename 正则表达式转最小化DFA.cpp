@@ -1,7 +1,7 @@
 /*
-*writer:ÀîÌìÏé 
+*writer:æå¤©ç¥¥ 
 *date:2018.10.31 
-*func:ÕıÔò±í´ïÊ½×ª»¯Îª×îĞ¡DFA 
+*func:æ­£åˆ™è¡¨è¾¾å¼è½¬åŒ–ä¸ºæœ€å°DFA 
 */
 
 
@@ -20,30 +20,30 @@ using namespace std;
 typedef set<int> IntSet;
 typedef set<char> CharSet;
 
-/********************±í´ïÊ½×ªNFA********************/
+/********************è¡¨è¾¾å¼è½¬NFA********************/
 
-struct NfaState				/*¶¨ÒåNFA×´Ì¬*/
+struct NfaState				/*å®šä¹‰NFAçŠ¶æ€*/
 {
 	
-	int index;				/*NFA×´Ì¬µÄ×´Ì¬ºÅ*/ 
+	int index;				/*NFAçŠ¶æ€çš„çŠ¶æ€å·*/ 
 	
-	char input;				/*NFA×´Ì¬»¡ÉÏµÄÖµ*/
-	int chTrans;			/*NFA×´Ì¬»¡×ªÒÆµ½µÄ×´Ì¬ºÅ*/ 
+	char input;				/*NFAçŠ¶æ€å¼§ä¸Šçš„å€¼*/
+	int chTrans;			/*NFAçŠ¶æ€å¼§è½¬ç§»åˆ°çš„çŠ¶æ€å·*/ 
 	
-	IntSet epTrans;			/*µ±Ç°×´Ì¬Í¨¹ı¦Å×ªÒÆµ½µÄ×´Ì¬ºÅ*/ 
+	IntSet epTrans;			/*å½“å‰çŠ¶æ€é€šè¿‡Îµè½¬ç§»åˆ°çš„çŠ¶æ€å·é›†åˆ*/ 
 };
 
 struct NFA
 {
 	
-	NfaState *head;			/*NFAµÄÍ·Ö¸Õë*/
-	NfaState *tail;			/*NFAµÄÎ²Ö¸Õë*/
+	NfaState *head;			/*NFAçš„å¤´æŒ‡é’ˆ*/
+	NfaState *tail;			/*NFAçš„å°¾æŒ‡é’ˆ*/
 };
 
-NfaState NfaStates[MAX];	/*NFA×´Ì¬Êı×é*/ 
-int nfaStateNum = 0;		/*NFA×´Ì¬×ÜÊı*/ 
+NfaState NfaStates[MAX];	/*NFAçŠ¶æ€æ•°ç»„*/ 
+int nfaStateNum = 0;		/*NFAçŠ¶æ€æ€»æ•°*/ 
 
-/*´Ó×´Ì¬n1µ½×´Ì¬n2Ìí¼ÓÒ»Ìõ»¡£¬»¡ÉÏµÄÖµÎªch*/
+/*ä»çŠ¶æ€n1åˆ°çŠ¶æ€n2æ·»åŠ ä¸€æ¡å¼§ï¼Œå¼§ä¸Šçš„å€¼ä¸ºch*/
 void add(NfaState *n1, NfaState *n2, char ch)
 {
 	
@@ -51,14 +51,14 @@ void add(NfaState *n1, NfaState *n2, char ch)
 	n1->chTrans = n2->index;
 }
 
-/*´Ó×´Ì¬n1µ½×´Ì¬n2Ìí¼ÓÒ»Ìõ»¡£¬»¡ÉÏµÄÖµÎª¦Å*/
+/*ä»çŠ¶æ€n1åˆ°çŠ¶æ€n2æ·»åŠ ä¸€æ¡å¼§ï¼Œå¼§ä¸Šçš„å€¼ä¸ºÎµ*/
 void add(NfaState *n1, NfaState *n2)
 {
 	
 	n1->epTrans.insert(n2->index);
 }
 
-/*ĞÂ½¨Ò»¸öNFA£¨¼´´ÓNFA×´Ì¬Êı×éÖĞÈ¡³öÁ½¸ö×´Ì¬£©*/
+/*æ–°å»ºä¸€ä¸ªNFAï¼ˆå³ä»NFAçŠ¶æ€æ•°ç»„ä¸­å–å‡ºä¸¤ä¸ªçŠ¶æ€ï¼‰*/
 NFA creatNFA(int sum)
 {
 	
@@ -70,7 +70,7 @@ NFA creatNFA(int sum)
 	return n;
 }
 
-/*ÔÚ×Ö·û´®sµÚnÎ»ºóÃæ²åÈë×Ö·ûch*/
+/*åœ¨å­—ç¬¦ä¸²sç¬¬nä½åé¢æ’å…¥å­—ç¬¦ch*/
 void insert(string &s, int n, char ch)
 {
 	
@@ -84,7 +84,7 @@ void insert(string &s, int n, char ch)
 	s[n] = ch;
 }
 
-/*¶Ô×Ö·û´®s½øĞĞÔ¤´¦Àí£¬ÔÚµÚÒ»Î»ÊÇ²Ù×÷Êı¡¢¡®*¡¯»ò¡®)¡¯ÇÒµÚ¶şÎ»ÊÇ²Ù×÷Êı»ò¡®(¡¯Ö®¼ä¼ÓÈëÁ¬½Ó·û¡®&¡¯*/ 
+/*å¯¹å­—ç¬¦ä¸²sè¿›è¡Œé¢„å¤„ç†ï¼Œåœ¨ç¬¬ä¸€ä½æ˜¯æ“ä½œæ•°ã€â€˜*â€™æˆ–â€˜)â€™ä¸”ç¬¬äºŒä½æ˜¯æ“ä½œæ•°æˆ–â€˜(â€™ä¹‹é—´åŠ å…¥è¿æ¥ç¬¦â€˜&â€™*/ 
 void preprocess(string &s)
 {
 	
@@ -106,7 +106,7 @@ void preprocess(string &s)
 	}
 } 
 
-/*ÖĞ×º×ªºó×ºÊ±ÓÃµ½µÄÓÅÏÈ¼¶±È½Ï£¬¼´ÎªÃ¿¸ö²Ù×÷·û¸³Ò»¸öÈ¨ÖØ£¬Í¨¹ıÈ¨ÖØ´óĞ¡±È½ÏÓÅÏÈ¼¶*/
+/*ä¸­ç¼€è½¬åç¼€æ—¶ç”¨åˆ°çš„ä¼˜å…ˆçº§æ¯”è¾ƒï¼Œå³ä¸ºæ¯ä¸ªæ“ä½œç¬¦èµ‹ä¸€ä¸ªæƒé‡ï¼Œé€šè¿‡æƒé‡å¤§å°æ¯”è¾ƒä¼˜å…ˆçº§*/
 int priority(char ch)
 {
 
@@ -131,35 +131,35 @@ int priority(char ch)
 	}
 }
 
-/*ÖĞ×º±í´ïÊ½×ªºó×º±í´ïÊ½*/
+/*ä¸­ç¼€è¡¨è¾¾å¼è½¬åç¼€è¡¨è¾¾å¼*/
 string infixToSuffix(string s)
 {
 	
-	preprocess(s);			/*¶Ô×Ö·û´®½øĞĞÔ¤´¦Àí*/
+	preprocess(s);			/*å¯¹å­—ç¬¦ä¸²è¿›è¡Œé¢„å¤„ç†*/
 	
-	string str;				/*ÒªÊä³öµÄºó×º×Ö·û´®*/
-	stack<char> oper;		/*ÔËËã·ûÕ»*/
+	string str;				/*è¦è¾“å‡ºçš„åç¼€å­—ç¬¦ä¸²*/
+	stack<char> oper;		/*è¿ç®—ç¬¦æ ˆ*/
 	
 	for(int i = 0; i < s.size(); i++)
 	{
 		
-		if(s[i] >= 'a' && s[i] <= 'z')	/*Èç¹ûÊÇ²Ù×÷ÊıÖ±½ÓÊä³ö*/
+		if(s[i] >= 'a' && s[i] <= 'z')	/*å¦‚æœæ˜¯æ“ä½œæ•°ç›´æ¥è¾“å‡º*/
 		{
 			str += s[i];
 		} 
-		else							/*Óöµ½ÔËËã·ûÊ±*/ 
+		else							/*é‡åˆ°è¿ç®—ç¬¦æ—¶*/ 
 		{
 			
-			if(s[i] == '(')			/*Óöµ½×óÀ¨ºÅÑ¹ÈëÕ»ÖĞ*/
+			if(s[i] == '(')			/*é‡åˆ°å·¦æ‹¬å·å‹å…¥æ ˆä¸­*/
 			{
 				oper.push(s[i]);
 			} 
 			
-			else if(s[i] == ')')	/*Óöµ½ÓÒÀ¨ºÅÊ±*/
+			else if(s[i] == ')')	/*é‡åˆ°å³æ‹¬å·æ—¶*/
 			{
 					
 				char ch = oper.top();
-				while(ch != '(')		/*½«Õ»ÖĞÔªËØ³öÕ»£¬Ö±µ½Õ»¶¥Îª×óÀ¨ºÅ*/
+				while(ch != '(')		/*å°†æ ˆä¸­å…ƒç´ å‡ºæ ˆï¼Œç›´åˆ°æ ˆé¡¶ä¸ºå·¦æ‹¬å·*/
 				{
 					
 					str += ch;
@@ -168,32 +168,32 @@ string infixToSuffix(string s)
 					ch = oper.top();
 				}
 				
-				oper.pop();				/*×îºó½«×óÀ¨ºÅ³öÕ»*/ 
+				oper.pop();				/*æœ€åå°†å·¦æ‹¬å·å‡ºæ ˆ*/ 
 			}
-			else					/*Óöµ½ÆäËû²Ù×÷·ûÊ±*/ 
+			else					/*é‡åˆ°å…¶ä»–æ“ä½œç¬¦æ—¶*/ 
 			{
 				
-				if(!oper.empty())			/*Èç¹ûÕ»²»Îª¿Õ*/ 
+				if(!oper.empty())			/*å¦‚æœæ ˆä¸ä¸ºç©º*/ 
 				{
 					
 					char ch = oper.top();
-					while(priority(ch) >= priority(s[i]))	/*µ¯³öÕ»ÖĞÓÅÏÈ¼¶´óÓÚµÈÓÚµ±Ç°ÔËËã·ûµÄÔËËã·û*/ 
+					while(priority(ch) >= priority(s[i]))	/*å¼¹å‡ºæ ˆä¸­ä¼˜å…ˆçº§å¤§äºç­‰äºå½“å‰è¿ç®—ç¬¦çš„è¿ç®—ç¬¦*/ 
 					{
 						
 						str +=	ch;
 						oper.pop();
 						
-						if(oper.empty())	/*Èç¹ûÕ»Îª¿ÕÔò½áÊøÑ­»·*/ 
+						if(oper.empty())	/*å¦‚æœæ ˆä¸ºç©ºåˆ™ç»“æŸå¾ªç¯*/ 
 						{
 							break;
 						} 								
 						else ch = oper.top();
 					} 
 
-					oper.push(s[i]);		/*ÔÙ½«µ±Ç°ÔËËã·ûÈëÕ»*/ 
+					oper.push(s[i]);		/*å†å°†å½“å‰è¿ç®—ç¬¦å…¥æ ˆ*/ 
 				}
 				
-				else				/*Èç¹ûÕ»Îª¿Õ£¬Ö±½Ó½«ÔËËã·ûÈëÕ»*/
+				else				/*å¦‚æœæ ˆä¸ºç©ºï¼Œç›´æ¥å°†è¿ç®—ç¬¦å…¥æ ˆ*/
 				{
 					oper.push(s[i]);
 				}
@@ -201,7 +201,7 @@ string infixToSuffix(string s)
 		}
 	}
 	
-	/*×îºóÈç¹ûÕ»²»Îª¿Õ£¬Ôò³öÕ»²¢Êä³öµ½×Ö·û´®*/
+	/*æœ€åå¦‚æœæ ˆä¸ä¸ºç©ºï¼Œåˆ™å‡ºæ ˆå¹¶è¾“å‡ºåˆ°å­—ç¬¦ä¸²*/
 	while(!oper.empty())
 	{
 		
@@ -212,110 +212,110 @@ string infixToSuffix(string s)
 	}
 	
 	cout<<"*******************************************"<<endl<<endl;
-	cout<<"ÖĞ×º±í´ïÊ½Îª£º"<<s<<endl<<endl; 
-	cout<<"ºó×º±í´ïÊ½Îª£º"<<str<<endl<<endl;
+	cout<<"ä¸­ç¼€è¡¨è¾¾å¼ä¸ºï¼š"<<s<<endl<<endl; 
+	cout<<"åç¼€è¡¨è¾¾å¼ä¸ºï¼š"<<str<<endl<<endl;
 
 	return str;
 } 
 
-/*ºó×º±í´ïÊ½×ªnfa*/
+/*åç¼€è¡¨è¾¾å¼è½¬nfa*/
 NFA strToNfa(string s)
 {
 	
-	stack<NFA> NfaStack;		/*¶¨ÒåÒ»¸öNFAÕ»*/ 
+	stack<NFA> NfaStack;		/*å®šä¹‰ä¸€ä¸ªNFAæ ˆ*/ 
 	
-	for(int i = 0; i < s.size(); i++)		/*¶ÁÈ¡ºó×º±í´ïÊ½£¬Ã¿´Î¶ÁÒ»¸ö×Ö·û*/ 
+	for(int i = 0; i < s.size(); i++)		/*è¯»å–åç¼€è¡¨è¾¾å¼ï¼Œæ¯æ¬¡è¯»ä¸€ä¸ªå­—ç¬¦*/ 
 	{
 
-		if(s[i] >= 'a' && s[i] <= 'z')		/*Óöµ½²Ù×÷Êı*/ 
+		if(s[i] >= 'a' && s[i] <= 'z')		/*é‡åˆ°æ“ä½œæ•°*/ 
 		{
 			
-			NFA n = creatNFA(nfaStateNum);		/*ĞÂ½¨Ò»¸öNFA*/ 
-			nfaStateNum += 2;					/*NFA×´Ì¬×ÜÊı¼Ó2*/
+			NFA n = creatNFA(nfaStateNum);		/*æ–°å»ºä¸€ä¸ªNFA*/ 
+			nfaStateNum += 2;					/*NFAçŠ¶æ€æ€»æ•°åŠ 2*/
 			
-			add(n.head, n.tail, s[i]);			/*NFAµÄÍ·Ö¸ÏòÎ²£¬»¡ÉÏµÄÖµÎªs[i]*/
+			add(n.head, n.tail, s[i]);			/*NFAçš„å¤´æŒ‡å‘å°¾ï¼Œå¼§ä¸Šçš„å€¼ä¸ºs[i]*/
 
-			NfaStack.push(n);					/*½«¸ÃNFAÈëÕ»*/
+			NfaStack.push(n);					/*å°†è¯¥NFAå…¥æ ˆ*/
 		}
 		
-		else if(s[i] == '*')		/*Óöµ½±Õ°üÔËËã·û*/
+		else if(s[i] == '*')		/*é‡åˆ°é—­åŒ…è¿ç®—ç¬¦*/
 		{
 			
-			NFA n1 = creatNFA(nfaStateNum);		/*ĞÂ½¨Ò»¸öNFA*/
-			nfaStateNum += 2;					/*NFA×´Ì¬×ÜÊı¼Ó2*/
+			NFA n1 = creatNFA(nfaStateNum);		/*æ–°å»ºä¸€ä¸ªNFA*/
+			nfaStateNum += 2;					/*NFAçŠ¶æ€æ€»æ•°åŠ 2*/
 
-			NFA n2 = NfaStack.top();			/*´ÓÕ»ÖĞµ¯³öÒ»¸öNFA*/
+			NFA n2 = NfaStack.top();			/*ä»æ ˆä¸­å¼¹å‡ºä¸€ä¸ªNFA*/
 			NfaStack.pop();
 			
-			add(n2.tail, n1.head);				/*n2µÄÎ²Í¨¹ı¦ÅÖ¸Ïòn1µÄÍ·*/
-			add(n2.tail, n1.tail);				/*n2µÄÎ²Í¨¹ı¦ÅÖ¸Ïòn1µÄÎ²*/
-			add(n1.head, n2.head);				/*n1µÄÍ·Í¨¹ı¦ÅÖ¸Ïòn2µÄÍ·*/
-			add(n1.head, n1.tail);				/*n1µÄÍ·Í¨¹ı¦ÅÖ¸Ïòn1µÄÎ²*/
+			add(n2.tail, n1.head);				/*n2çš„å°¾é€šè¿‡ÎµæŒ‡å‘n1çš„å¤´*/
+			add(n2.tail, n1.tail);				/*n2çš„å°¾é€šè¿‡ÎµæŒ‡å‘n1çš„å°¾*/
+			add(n1.head, n2.head);				/*n1çš„å¤´é€šè¿‡ÎµæŒ‡å‘n2çš„å¤´*/
+			add(n1.head, n1.tail);				/*n1çš„å¤´é€šè¿‡ÎµæŒ‡å‘n1çš„å°¾*/
 			
-			NfaStack.push(n1);					/*×îºó½«ĞÂÉú³ÉµÄNFAÈëÕ»*/
+			NfaStack.push(n1);					/*æœ€åå°†æ–°ç”Ÿæˆçš„NFAå…¥æ ˆ*/
 		}
 		
-		else if(s[i] == '|')		/*Óöµ½»òÔËËã·û*/
+		else if(s[i] == '|')		/*é‡åˆ°æˆ–è¿ç®—ç¬¦*/
 		{
 			
-			NFA n1, n2;							/*´ÓÕ»ÖĞµ¯³öÁ½¸öNFA£¬Õ»¶¥Îªn2£¬´ÎÕ»¶¥Îªn1*/
+			NFA n1, n2;							/*ä»æ ˆä¸­å¼¹å‡ºä¸¤ä¸ªNFAï¼Œæ ˆé¡¶ä¸ºn2ï¼Œæ¬¡æ ˆé¡¶ä¸ºn1*/
 			n2 = NfaStack.top();
 			NfaStack.pop();
 			
 			n1 = NfaStack.top();
 			NfaStack.pop();
 			
-			NFA n = creatNFA(nfaStateNum);		/*ĞÂ½¨Ò»¸öNFA*/
-			nfaStateNum +=2;					/*NFA×´Ì¬×ÜÊı¼Ó2*/
+			NFA n = creatNFA(nfaStateNum);		/*æ–°å»ºä¸€ä¸ªNFA*/
+			nfaStateNum +=2;					/*NFAçŠ¶æ€æ€»æ•°åŠ 2*/
 
-			add(n.head, n1.head);				/*nµÄÍ·Í¨¹ı¦ÅÖ¸Ïòn1µÄÍ·*/
-			add(n.head, n2.head);				/*nµÄÍ·Í¨¹ı¦ÅÖ¸Ïòn2µÄÍ·*/	
-			add(n1.tail, n.tail);				/*n1µÄÎ²Í¨¹ı¦ÅÖ¸ÏònµÄÎ²*/
-			add(n2.tail, n.tail);				/*n2µÄÎ²Í¨¹ı¦ÅÖ¸ÏònµÄÎ²*/
+			add(n.head, n1.head);				/*nçš„å¤´é€šè¿‡ÎµæŒ‡å‘n1çš„å¤´*/
+			add(n.head, n2.head);				/*nçš„å¤´é€šè¿‡ÎµæŒ‡å‘n2çš„å¤´*/	
+			add(n1.tail, n.tail);				/*n1çš„å°¾é€šè¿‡ÎµæŒ‡å‘nçš„å°¾*/
+			add(n2.tail, n.tail);				/*n2çš„å°¾é€šè¿‡ÎµæŒ‡å‘nçš„å°¾*/
 			
-			NfaStack.push(n);					/*×îºó½«ĞÂÉú³ÉµÄNFAÈëÕ»*/
+			NfaStack.push(n);					/*æœ€åå°†æ–°ç”Ÿæˆçš„NFAå…¥æ ˆ*/
 		}
 		
-		else if(s[i] == '&')		/*Óöµ½Á¬½ÓÔËËã·û*/
+		else if(s[i] == '&')		/*é‡åˆ°è¿æ¥è¿ç®—ç¬¦*/
 		{
 			
-			NFA n1, n2, n;				/*¶¨ÒåÒ»¸öĞÂµÄNFA n*/
+			NFA n1, n2, n;				/*å®šä¹‰ä¸€ä¸ªæ–°çš„NFA n*/
 			
-			n2 = NfaStack.top();				/*´ÓÕ»ÖĞµ¯³öÁ½¸öNFA£¬Õ»¶¥Îªn2£¬´ÎÕ»¶¥Îªn1*/
+			n2 = NfaStack.top();				/*ä»æ ˆä¸­å¼¹å‡ºä¸¤ä¸ªNFAï¼Œæ ˆé¡¶ä¸ºn2ï¼Œæ¬¡æ ˆé¡¶ä¸ºn1*/
 			NfaStack.pop();
 			
 			n1 = NfaStack.top();
 			NfaStack.pop();
 			
-			add(n1.tail, n2.head);				/*n1µÄÎ²Í¨¹ı¦ÅÖ¸Ïòn2µÄÎ²*/
+			add(n1.tail, n2.head);				/*n1çš„å°¾é€šè¿‡ÎµæŒ‡å‘n2çš„å°¾*/
 			
-			n.head = n1.head;					/*nµÄÍ·Îªn1µÄÍ·*/
-			n.tail = n2.tail;					/*nµÄÎ²Îªn2µÄÎ²*/
+			n.head = n1.head;					/*nçš„å¤´ä¸ºn1çš„å¤´*/
+			n.tail = n2.tail;					/*nçš„å°¾ä¸ºn2çš„å°¾*/
 
-			NfaStack.push(n);					/*×îºó½«ĞÂÉú³ÉµÄNFAÈëÕ»*/
+			NfaStack.push(n);					/*æœ€åå°†æ–°ç”Ÿæˆçš„NFAå…¥æ ˆ*/
 		}
 	}
 	
-	return NfaStack.top();		/*×îºóµÄÕ»¶¥ÔªËØ¼´ÎªÉú³ÉºÃµÄNFA*/
+	return NfaStack.top();		/*æœ€åçš„æ ˆé¡¶å…ƒç´ å³ä¸ºç”Ÿæˆå¥½çš„NFA*/
 }
 
-/*´òÓ¡NFAº¯Êı*/
+/*æ‰“å°NFAå‡½æ•°*/
 void printNFA(NFA nfa)
 {
 
 	cout<<"***************     NFA     ***************"<<endl<<endl; 
-	cout<<"NFA×Ü¹²ÓĞ"<<nfaStateNum<<"¸ö×´Ì¬£¬"<<endl;
-	cout<<"³õÌ¬Îª"<<nfa.head->index<<"£¬ÖÕÌ¬Îª" <<nfa.tail->index<<"¡£"<<endl<<endl<<"×ªÒÆº¯ÊıÎª£º"<<endl;
+	cout<<"NFAæ€»å…±æœ‰"<<nfaStateNum<<"ä¸ªçŠ¶æ€ï¼Œ"<<endl;
+	cout<<"åˆæ€ä¸º"<<nfa.head->index<<"ï¼Œç»ˆæ€ä¸º" <<nfa.tail->index<<"ã€‚"<<endl<<endl<<"è½¬ç§»å‡½æ•°ä¸ºï¼š"<<endl;
 	
-	for(int i = 0; i < nfaStateNum; i++)		/*±éÀúNFA×´Ì¬Êı×é*/
+	for(int i = 0; i < nfaStateNum; i++)		/*éå†NFAçŠ¶æ€æ•°ç»„*/
 	{
 		
-		if(NfaStates[i].input != '#')			/*Èç¹û»¡ÉÏµÄÖµ²»ÊÇ³õÊ¼Ê±µÄ¡®#¡¯ÔòÊä³ö*/
+		if(NfaStates[i].input != '#')			/*å¦‚æœå¼§ä¸Šçš„å€¼ä¸æ˜¯åˆå§‹æ—¶çš„â€˜#â€™åˆ™è¾“å‡º*/
 		{
 			cout<<NfaStates[i].index<<"-->'"<<NfaStates[i].input<<"'-->"<<NfaStates[i].chTrans<<'\t';
 		}
 		
-		IntSet::iterator it;					/*Êä³ö¸Ã×´Ì¬¾­¹ı¦Åµ½´ïµÄ×´Ì¬*/
+		IntSet::iterator it;					/*è¾“å‡ºè¯¥çŠ¶æ€ç»è¿‡Îµåˆ°è¾¾çš„çŠ¶æ€*/
 		for(it = NfaStates[i].epTrans.begin(); it != NfaStates[i].epTrans.end(); it++)
 		{
 			cout<<NfaStates[i].index<<"-->'"<<' '<<"'-->"<<*it<<'\t';
@@ -325,190 +325,190 @@ void printNFA(NFA nfa)
 	}
 }
 
-/********************NFA×ªDFA********************/
+/********************NFAè½¬DFA********************/
 
-struct Edge			/*¶¨ÒåDFAµÄ×ª»»»¡*/
+struct Edge			/*å®šä¹‰DFAçš„è½¬æ¢å¼§*/
 {
 	
-	char input;			/*»¡ÉÏµÄÖµ*/
-	int Trans;			/*»¡ËùÖ¸ÏòµÄ×´Ì¬ºÅ*/
+	char input;			/*å¼§ä¸Šçš„å€¼*/
+	int Trans;			/*å¼§æ‰€æŒ‡å‘çš„çŠ¶æ€å·*/
 };
 
-struct DfaState		/*¶¨ÒåDFA×´Ì¬*/
+struct DfaState		/*å®šä¹‰DFAçŠ¶æ€*/
 {
 	
-	bool isEnd;			/*ÊÇ·ñÎªÖÕÌ¬£¬ÊÇÎªtrue£¬²»ÊÇÎªfalse*/
+	bool isEnd;			/*æ˜¯å¦ä¸ºç»ˆæ€ï¼Œæ˜¯ä¸ºtrueï¼Œä¸æ˜¯ä¸ºfalse*/
 	
-	int index;			/*DFA×´Ì¬µÄ×´Ì¬ºÅ*/
-	IntSet closure;		/*NFAµÄ¦Å-move()±Õ°ü*/
+	int index;			/*DFAçŠ¶æ€çš„çŠ¶æ€å·*/
+	IntSet closure;		/*NFAçš„Îµ-move()é—­åŒ…*/
 	
-	int edgeNum;		/*DFA×´Ì¬ÉÏµÄÉä³ö»¡Êı*/
-	Edge Edges[10];		/*DFA×´Ì¬ÉÏµÄÉä³ö»¡*/
+	int edgeNum;		/*DFAçŠ¶æ€ä¸Šçš„å°„å‡ºå¼§æ•°*/
+	Edge Edges[10];		/*DFAçŠ¶æ€ä¸Šçš„å°„å‡ºå¼§*/
 };
 
-DfaState DfaStates[MAX];		/*DFA×´Ì¬Êı×é*/
-int dfaStateNum = 0;			/*DFA×´Ì¬×ÜÊı*/
+DfaState DfaStates[MAX];		/*DFAçŠ¶æ€æ•°ç»„*/
+int dfaStateNum = 0;			/*DFAçŠ¶æ€æ€»æ•°*/
 
-struct DFA			/*¶¨ÒåDFA½á¹¹*/
+struct DFA			/*å®šä¹‰DFAç»“æ„*/
 {
 	
-	int startState;				/*DFAµÄ³õÌ¬*/
+	int startState;				/*DFAçš„åˆæ€*/
 	
-	set<int> endStates;			/*DFAµÄÖÕÌ¬¼¯*/
-	set<char> terminator;		/*DFAµÄÖÕ½á·û¼¯*/
+	set<int> endStates;			/*DFAçš„ç»ˆæ€é›†*/
+	set<char> terminator;		/*DFAçš„ç»ˆç»“ç¬¦é›†*/
 	
-	int trans[MAX][26];		/*DFAµÄ×ªÒÆ¾ØÕó*/
+	int trans[MAX][26];		/*DFAçš„è½¬ç§»çŸ©é˜µ*/
 };
 
-/*ÇóÒ»¸ö×´Ì¬¼¯µÄ¦Å-cloure*/
+/*æ±‚ä¸€ä¸ªçŠ¶æ€é›†çš„Îµ-cloure*/
 IntSet epcloure(IntSet s)
 {
 	
-	stack<int> epStack;		/*(´Ë´¦Õ»ºÍ¶ÓÁĞ¾ù¿É)*/
+	stack<int> epStack;		/*(æ­¤å¤„æ ˆå’Œé˜Ÿåˆ—å‡å¯)*/
 	
 	IntSet::iterator it;
 	for(it = s.begin(); it != s.end(); it++)
 	{
-		epStack.push(*it);			/*½«¸Ã×´Ì¬¼¯ÖĞµÄÃ¿Ò»¸öÔªËØ¶¼Ñ¹ÈëÕ»ÖĞ*/
+		epStack.push(*it);			/*å°†è¯¥çŠ¶æ€é›†ä¸­çš„æ¯ä¸€ä¸ªå…ƒç´ éƒ½å‹å…¥æ ˆä¸­*/
 	}
 	
-	while(!epStack.empty())			/*Ö»ÒªÕ»²»Îª¿Õ*/
+	while(!epStack.empty())			/*åªè¦æ ˆä¸ä¸ºç©º*/
 	{
 		
-		int temp = epStack.top();		/*´ÓÕ»ÖĞµ¯³öÒ»¸öÔªËØ*/
+		int temp = epStack.top();		/*ä»æ ˆä¸­å¼¹å‡ºä¸€ä¸ªå…ƒç´ */
 		epStack.pop();
 		
 		IntSet::iterator iter;
 		for(iter = NfaStates[temp].epTrans.begin(); iter != NfaStates[temp].epTrans.end(); iter++)
 		{
-			if(!s.count(*iter))				/*±éÀúËüÍ¨¹ı¦ÅÄÜ×ª»»µ½µÄ×´Ì¬¼¯*/
-			{								/*Èç¹ûµ±Ç°ÔªËØÃ»ÓĞÔÚ¼¯ºÏÖĞ³öÏÖ*/
-				s.insert(*iter);			/*Ôò°ÑËü¼ÓÈë¼¯ºÏÖĞ*/
-				epStack.push(*iter);		/*Í¬Ê±Ñ¹ÈëÕ»ÖĞ*/
+			if(!s.count(*iter))				/*éå†å®ƒé€šè¿‡Îµèƒ½è½¬æ¢åˆ°çš„çŠ¶æ€é›†*/
+			{								/*å¦‚æœå½“å‰å…ƒç´ æ²¡æœ‰åœ¨é›†åˆä¸­å‡ºç°*/
+				s.insert(*iter);			/*åˆ™æŠŠå®ƒåŠ å…¥é›†åˆä¸­*/
+				epStack.push(*iter);		/*åŒæ—¶å‹å…¥æ ˆä¸­*/
 			}
 		}
 	}
 	
-	return s;		/*×îºóµÄs¼´Îª¦Å-cloure*/
+	return s;		/*æœ€åçš„så³ä¸ºÎµ-cloure*/
 }
 
-/*ÇóÒ»¸ö×´Ì¬¼¯sµÄ¦Å-cloure(move(ch))*/
+/*æ±‚ä¸€ä¸ªçŠ¶æ€é›†sçš„Îµ-cloure(move(ch))*/
 IntSet moveEpCloure(IntSet s, char ch)
 {
 	
 	IntSet temp;
 	
 	IntSet::iterator it;
-	for(it = s.begin(); it != s.end(); it++)		/*±éÀúµ±Ç°¼¯ºÏsÖĞµÄÃ¿¸öÔªËØ*/
+	for(it = s.begin(); it != s.end(); it++)		/*éå†å½“å‰é›†åˆsä¸­çš„æ¯ä¸ªå…ƒç´ */
 	{
-		if(NfaStates[*it].input == ch)				/*Èç¹û¶ÔÓ¦×ª»»»¡ÉÏµÄÖµÎªch*/
+		if(NfaStates[*it].input == ch)				/*å¦‚æœå¯¹åº”è½¬æ¢å¼§ä¸Šçš„å€¼ä¸ºch*/
 		{
-			temp.insert(NfaStates[*it].chTrans);		/*Ôò°Ñ¸Ã»¡Í¨¹ıch×ª»»µ½µÄ×´Ì¬¼ÓÈëµ½¼¯ºÏtempÖĞ*/
+			temp.insert(NfaStates[*it].chTrans);		/*åˆ™æŠŠè¯¥å¼§é€šè¿‡chè½¬æ¢åˆ°çš„çŠ¶æ€åŠ å…¥åˆ°é›†åˆtempä¸­*/
 		}
 	}
 	
-	temp = epcloure(temp);			/*×îºóÇótempµÄ¦Å±Õ°ü*/
+	temp = epcloure(temp);			/*æœ€åæ±‚tempçš„Îµé—­åŒ…*/
 	return temp;
 }
 
-/*ÅĞ¶ÏÒ»¸ö×´Ì¬ÊÇ·ñÎªÖÕÌ¬*/
+/*åˆ¤æ–­ä¸€ä¸ªçŠ¶æ€æ˜¯å¦ä¸ºç»ˆæ€*/
 bool IsEnd(NFA n, IntSet s)
 {
 	
 	IntSet::iterator it;
-	for(it = s.begin(); it != s.end(); it++)	/*±éÀú¸Ã×´Ì¬Ëù°üº¬µÄnfa×´Ì¬¼¯*/
+	for(it = s.begin(); it != s.end(); it++)	/*éå†è¯¥çŠ¶æ€æ‰€åŒ…å«çš„nfaçŠ¶æ€é›†*/
 	{
-		if(*it == n.tail->index)				/*Èç¹û°üº¬nfaµÄÖÕÌ¬£¬Ôò¸Ã×´Ì¬ÎªÖÕÌ¬£¬·µ»Øtrue*/
+		if(*it == n.tail->index)				/*å¦‚æœåŒ…å«nfaçš„ç»ˆæ€ï¼Œåˆ™è¯¥çŠ¶æ€ä¸ºç»ˆæ€ï¼Œè¿”å›true*/
 		{
 			return true;
 		}
 	}
 	
-	return false;		/*Èç¹û²»°üº¬£¬Ôò²»ÊÇÖÕÌ¬£¬·µ»Øfalse*/
+	return false;		/*å¦‚æœä¸åŒ…å«ï¼Œåˆ™ä¸æ˜¯ç»ˆæ€ï¼Œè¿”å›false*/
 }
 
-/*nfa×ªdfaÖ÷º¯Êı*/
-DFA nfaToDfa(NFA n, string str)		/*²ÎÊıÎªnfaºÍºó×º±í´ïÊ½*/
+/*nfaè½¬dfaä¸»å‡½æ•°*/
+DFA nfaToDfa(NFA n, string str)		/*å‚æ•°ä¸ºnfaå’Œåç¼€è¡¨è¾¾å¼*/
 {
 	
 	cout<<"***************     DFA     ***************"<<endl<<endl; 
 	
 	int i;
 	DFA d;
-	set<IntSet> states;		/*¶¨ÒåÒ»¸ö´æ´¢ÕûÊı¼¯ºÏµÄ¼¯ºÏ£¬ÓÃÓÚÅĞ¶ÏÇó³öÒ»¸ö×´Ì¬¼¯sµÄ¦Å-cloure(move(ch))ºóÊÇ·ñ³öÏÖĞÂ×´Ì¬*/
+	set<IntSet> states;		/*å®šä¹‰ä¸€ä¸ªå­˜å‚¨æ•´æ•°é›†åˆçš„é›†åˆï¼Œç”¨äºåˆ¤æ–­æ±‚å‡ºä¸€ä¸ªçŠ¶æ€é›†sçš„Îµ-cloure(move(ch))åæ˜¯å¦å‡ºç°æ–°çŠ¶æ€*/
 	
-	memset(d.trans, -1, sizeof(d.trans));	/*³õÊ¼»¯dfaµÄ×ªÒÆ¾ØÕó*/ 
+	memset(d.trans, -1, sizeof(d.trans));	/*åˆå§‹åŒ–dfaçš„è½¬ç§»çŸ©é˜µ*/ 
 	
-	for(i = 0; i < str.size(); i++)			/*±éÀúºó×º±í´ïÊ½*/
+	for(i = 0; i < str.size(); i++)			/*éå†åç¼€è¡¨è¾¾å¼*/
 	{
-		if(str[i] >= 'a' && str[i] <= 'z')		/*Èç¹ûÓöµ½²Ù×÷Êı£¬Ôò°ÑËü¼ÓÈëµ½dfaµÄÖÕ½á·û¼¯ÖĞ*/
+		if(str[i] >= 'a' && str[i] <= 'z')		/*å¦‚æœé‡åˆ°æ“ä½œæ•°ï¼Œåˆ™æŠŠå®ƒåŠ å…¥åˆ°dfaçš„ç»ˆç»“ç¬¦é›†ä¸­*/
 		{
 			d.terminator.insert(str[i]);
 		}
 	}
 	
-	d.startState = 0;		/*dfaµÄ³õÌ¬Îª0*/
+	d.startState = 0;		/*dfaçš„åˆæ€ä¸º0*/
 	
 	IntSet tempSet;
-	tempSet.insert(n.head->index);		/*½«nfaµÄ³õÌ¬¼ÓÈëµ½¼¯ºÏÖĞ*/
+	tempSet.insert(n.head->index);		/*å°†nfaçš„åˆæ€åŠ å…¥åˆ°é›†åˆä¸­*/
 	
-	DfaStates[0].closure = epcloure(tempSet);		/*ÇódfaµÄ³õÌ¬*/
-	DfaStates[0].isEnd = IsEnd(n, DfaStates[0].closure);		/*ÅĞ¶Ï³õÌ¬ÊÇ·ñÎªÖÕÌ¬*/
+	DfaStates[0].closure = epcloure(tempSet);		/*æ±‚dfaçš„åˆæ€*/
+	DfaStates[0].isEnd = IsEnd(n, DfaStates[0].closure);		/*åˆ¤æ–­åˆæ€æ˜¯å¦ä¸ºç»ˆæ€*/
 	
-	dfaStateNum++;			/*dfaÊıÁ¿¼ÓÒ»*/
+	dfaStateNum++;			/*dfaæ•°é‡åŠ ä¸€*/
 	
 	queue<int> q;
-	q.push(d.startState);		/*°ÑdfaµÄ³õÌ¬´æÈë¶ÓÁĞÖĞ(´Ë´¦Õ»ºÍ¶ÓÁĞ¾ù¿É)*/
+	q.push(d.startState);		/*æŠŠdfaçš„åˆæ€å­˜å…¥é˜Ÿåˆ—ä¸­(æ­¤å¤„æ ˆå’Œé˜Ÿåˆ—å‡å¯)*/
 	
-	while(!q.empty())		/*Ö»Òª¶ÓÁĞ²»Îª¿Õ£¬¾ÍÒ»Ö±Ñ­»·*/
+	while(!q.empty())		/*åªè¦é˜Ÿåˆ—ä¸ä¸ºç©ºï¼Œå°±ä¸€ç›´å¾ªç¯*/
 	{
 		
-		int num = q.front();				/*³öÈ¥¶ÓÊ×ÔªËØ*/
+		int num = q.front();				/*å‡ºå»é˜Ÿé¦–å…ƒç´ */
 		q.pop();
 		
 		CharSet::iterator it;
-		for(it = d.terminator.begin(); it != d.terminator.end(); it++)		/*±éÀúÖÕ½á·û¼¯*/
+		for(it = d.terminator.begin(); it != d.terminator.end(); it++)		/*éå†ç»ˆç»“ç¬¦é›†*/
 		{
 			
-			IntSet temp = moveEpCloure(DfaStates[num].closure, *it);		/*¼ÆËãÃ¿¸öÖÕ½á·ûµÄ¦Å-cloure(move(ch))*/
+			IntSet temp = moveEpCloure(DfaStates[num].closure, *it);		/*è®¡ç®—æ¯ä¸ªç»ˆç»“ç¬¦çš„Îµ-cloure(move(ch))*/
 			/*IntSet::iterator t;
 			cout<<endl;
-			for(t = temp.begin(); t != temp.end(); t++)   ´òÓ¡Ã¿´Î»®·Ö 
+			for(t = temp.begin(); t != temp.end(); t++)   æ‰“å°æ¯æ¬¡åˆ’åˆ† 
 			{
 				cout<<*t<<' ';
 			}
 			cout<<endl;*/
-			if(!states.count(temp) && !temp.empty())	/*Èç¹ûÇó³öÀ´µÄ×´Ì¬¼¯²»Îª¿ÕÇÒÓëÖ®Ç°Çó³öÀ´µÄ×´Ì¬¼¯²»Í¬£¬ÔòĞÂ½¨Ò»¸öDFA×´Ì¬*/
+			if(!states.count(temp) && !temp.empty())	/*å¦‚æœæ±‚å‡ºæ¥çš„çŠ¶æ€é›†ä¸ä¸ºç©ºä¸”ä¸ä¹‹å‰æ±‚å‡ºæ¥çš„çŠ¶æ€é›†ä¸åŒï¼Œåˆ™æ–°å»ºä¸€ä¸ªDFAçŠ¶æ€*/
 			{
 				
-				states.insert(temp);				/*½«ĞÂÇó³öÀ´µÄ×´Ì¬¼¯¼ÓÈëµ½×´Ì¬¼¯ºÏÖĞ*/
+				states.insert(temp);				/*å°†æ–°æ±‚å‡ºæ¥çš„çŠ¶æ€é›†åŠ å…¥åˆ°çŠ¶æ€é›†åˆä¸­*/
 
 				DfaStates[dfaStateNum].closure = temp;
 				
-				DfaStates[num].Edges[DfaStates[num].edgeNum].input = *it;				/*¸Ã×´Ì¬»¡µÄÊäÈë¼´Îªµ±Ç°ÖÕ½á·û*/
-				DfaStates[num].Edges[DfaStates[num].edgeNum].Trans = dfaStateNum;		/*»¡×ªÒÆµ½µÄ×´Ì¬Îª×îºóÒ»¸öDFA×´Ì¬*/
-				DfaStates[num].edgeNum++;												/*¸Ã×´Ì¬»¡µÄÊıÄ¿¼ÓÒ»*/
+				DfaStates[num].Edges[DfaStates[num].edgeNum].input = *it;				/*è¯¥çŠ¶æ€å¼§çš„è¾“å…¥å³ä¸ºå½“å‰ç»ˆç»“ç¬¦*/
+				DfaStates[num].Edges[DfaStates[num].edgeNum].Trans = dfaStateNum;		/*å¼§è½¬ç§»åˆ°çš„çŠ¶æ€ä¸ºæœ€åä¸€ä¸ªDFAçŠ¶æ€*/
+				DfaStates[num].edgeNum++;												/*è¯¥çŠ¶æ€å¼§çš„æ•°ç›®åŠ ä¸€*/
 				
-				d.trans[num][*it - 'a'] = dfaStateNum;		/*¸üĞÂ×ªÒÆ¾ØÕó*/
+				d.trans[num][*it - 'a'] = dfaStateNum;		/*æ›´æ–°è½¬ç§»çŸ©é˜µ*/
 				
-				DfaStates[dfaStateNum].isEnd = IsEnd(n, DfaStates[dfaStateNum].closure);	/*ÅĞ¶ÏÊÇ·ñÎªÖÕÌ¬*/
+				DfaStates[dfaStateNum].isEnd = IsEnd(n, DfaStates[dfaStateNum].closure);	/*åˆ¤æ–­æ˜¯å¦ä¸ºç»ˆæ€*/
 				
-				q.push(dfaStateNum);		/*½«ĞÂµÄ×´Ì¬ºÅ¼ÓÈë¶ÓÁĞÖĞ*/
+				q.push(dfaStateNum);		/*å°†æ–°çš„çŠ¶æ€å·åŠ å…¥é˜Ÿåˆ—ä¸­*/
 				
-				dfaStateNum++;		/*DFA×´Ì¬×ÜÊı¼ÓÒ»*/
+				dfaStateNum++;		/*DFAçŠ¶æ€æ€»æ•°åŠ ä¸€*/
 			}
-			else			/*Çó³öÀ´µÄ×´Ì¬¼¯ÔÚÖ®Ç°Çó³öµÄÄ³¸ö×´Ì¬¼¯ÏàÍ¬*/
+			else			/*æ±‚å‡ºæ¥çš„çŠ¶æ€é›†åœ¨ä¹‹å‰æ±‚å‡ºçš„æŸä¸ªçŠ¶æ€é›†ç›¸åŒ*/
 			{
-				for(i = 0; i < dfaStateNum; i++)		/*±éÀúÖ®Ç°Çó³öÀ´µÄ×´Ì¬¼¯ºÏ*/
+				for(i = 0; i < dfaStateNum; i++)		/*éå†ä¹‹å‰æ±‚å‡ºæ¥çš„çŠ¶æ€é›†åˆ*/
 				{
-					if(temp == DfaStates[i].closure)		/*ÕÒµ½Óë¸Ã¼¯ºÏÏàÍ¬µÄDFA×´Ì¬*/
+					if(temp == DfaStates[i].closure)		/*æ‰¾åˆ°ä¸è¯¥é›†åˆç›¸åŒçš„DFAçŠ¶æ€*/
 					{
 						
-						DfaStates[num].Edges[DfaStates[num].edgeNum].input = *it;		/*¸Ã×´Ì¬»¡µÄÊäÈë¼´Îªµ±Ç°ÖÕ½á·û*/
-						DfaStates[num].Edges[DfaStates[num].edgeNum].Trans = i;			/*¸Ã»¡×ªÒÆµ½µÄ×´Ì¬¼´Îªi*/
-						DfaStates[num].edgeNum++;										/*¸Ã×´Ì¬»¡µÄÊıÄ¿¼ÓÒ»*/
+						DfaStates[num].Edges[DfaStates[num].edgeNum].input = *it;		/*è¯¥çŠ¶æ€å¼§çš„è¾“å…¥å³ä¸ºå½“å‰ç»ˆç»“ç¬¦*/
+						DfaStates[num].Edges[DfaStates[num].edgeNum].Trans = i;			/*è¯¥å¼§è½¬ç§»åˆ°çš„çŠ¶æ€å³ä¸ºi*/
+						DfaStates[num].edgeNum++;										/*è¯¥çŠ¶æ€å¼§çš„æ•°ç›®åŠ ä¸€*/
 						
-						d.trans[num][*it - 'a'] = i;		/*¸üĞÂ×ªÒÆ¾ØÕó*/
+						d.trans[num][*it - 'a'] = i;		/*æ›´æ–°è½¬ç§»çŸ©é˜µ*/
 						
 						break;
 					}
@@ -517,26 +517,26 @@ DFA nfaToDfa(NFA n, string str)		/*²ÎÊıÎªnfaºÍºó×º±í´ïÊ½*/
 		}
 	}
 	
-	/*¼ÆËãdfaµÄÖÕÌ¬¼¯*/
-	for(i = 0; i < dfaStateNum; i++)	/*±éÀúdfaµÄËùÓĞ×´Ì¬*/	
+	/*è®¡ç®—dfaçš„ç»ˆæ€é›†*/
+	for(i = 0; i < dfaStateNum; i++)	/*éå†dfaçš„æ‰€æœ‰çŠ¶æ€*/	
 	{
-		if(DfaStates[i].isEnd == true)		/*Èç¹û¸Ã×´Ì¬ÊÇÖÕÌ¬*/
+		if(DfaStates[i].isEnd == true)		/*å¦‚æœè¯¥çŠ¶æ€æ˜¯ç»ˆæ€*/
 		{
-			d.endStates.insert(i);		/*Ôò½«¸Ã×´Ì¬ºÅ¼ÓÈëµ½dfaµÄÖÕÌ¬¼¯ÖĞ*/
+			d.endStates.insert(i);		/*åˆ™å°†è¯¥çŠ¶æ€å·åŠ å…¥åˆ°dfaçš„ç»ˆæ€é›†ä¸­*/
 		}
 	}
 	
 	return d;
 }
 
-/*´òÓ¡dfaº¯Êı*/
+/*æ‰“å°dfaå‡½æ•°*/
 void printDFA(DFA d)
 {
 	
 	int i, j;
-	cout<<"DFA×Ü¹²ÓĞ"<<dfaStateNum<<"¸ö×´Ì¬£¬"<<"³õÌ¬Îª"<<d.startState<<endl<<endl;
+	cout<<"DFAæ€»å…±æœ‰"<<dfaStateNum<<"ä¸ªçŠ¶æ€ï¼Œ"<<"åˆæ€ä¸º"<<d.startState<<endl<<endl;
 	
-	cout<<"ÓĞÇî×ÖÄ¸±íÎª£û ";
+	cout<<"æœ‰ç©·å­—æ¯è¡¨ä¸ºï½› ";
 	set<char>::iterator it;
 	for(it = d.terminator.begin(); it != d.terminator.end(); it++)
 	{
@@ -544,7 +544,7 @@ void printDFA(DFA d)
 	}
 	cout<<'}'<<endl<<endl;
 	
-	cout<<"ÖÕÌ¬¼¯Îª£û "; 
+	cout<<"ç»ˆæ€é›†ä¸ºï½› "; 
 	IntSet::iterator iter;
 	for(iter = d.endStates.begin(); iter != d.endStates.end(); iter++)
 	{
@@ -552,7 +552,7 @@ void printDFA(DFA d)
 	}
 	cout<<'}'<<endl<<endl;
 	
-	cout<<"×ªÒÆº¯ÊıÎª£º"<<endl;
+	cout<<"è½¬ç§»å‡½æ•°ä¸ºï¼š"<<endl;
 	for(i = 0; i < dfaStateNum; i++)
 	{
 		for(j = 0; j < DfaStates[i].edgeNum; j++)
@@ -572,7 +572,7 @@ void printDFA(DFA d)
 		cout<<endl;
 	}
 	
-	cout<<endl<<"×ªÒÆ¾ØÕóÎª£º"<<endl<<"     ";
+	cout<<endl<<"è½¬ç§»çŸ©é˜µä¸ºï¼š"<<endl<<"     ";
 	CharSet::iterator t;
 	for(t = d.terminator.begin(); t != d.terminator.end(); t++)
 	{
@@ -611,20 +611,20 @@ void printDFA(DFA d)
 	}
 }
 
-/******************DFAµÄ×îĞ¡»¯******************/
-IntSet s[MAX];					/*»®·Ö³öÀ´µÄ¼¯ºÏÊı×é*/
-DfaState minDfaStates[MAX];		/*minDfa×´Ì¬Êı×é*/
+/******************DFAçš„æœ€å°åŒ–******************/
+IntSet s[MAX];					/*åˆ’åˆ†å‡ºæ¥çš„é›†åˆæ•°ç»„*/
+DfaState minDfaStates[MAX];		/*minDfaçŠ¶æ€æ•°ç»„*/
 
-int minDfaStateNum = 0;			/*minDfaµÄ×´Ì¬×ÜÊı£¬Í¬Ê±Ò²ÊÇ»®·Ö³öµÄ¼¯ºÏÊı*/
+int minDfaStateNum = 0;			/*minDfaçš„çŠ¶æ€æ€»æ•°ï¼ŒåŒæ—¶ä¹Ÿæ˜¯åˆ’åˆ†å‡ºçš„é›†åˆæ•°*/
 
-struct stateSet			/*»®·Ö×´Ì¬¼¯*/
+struct stateSet			/*åˆ’åˆ†çŠ¶æ€é›†*/
 {
 	
-	int index;			/*¸Ã×´Ì¬¼¯ËùÄÜ×ª»»µ½µÄ×´Ì¬¼¯±êºÅ*/  
-	IntSet s;			/*¸Ã×´Ì¬¼¯ÖĞµÄdfa×´Ì¬ºÅ*/
+	int index;			/*è¯¥çŠ¶æ€é›†æ‰€èƒ½è½¬æ¢åˆ°çš„çŠ¶æ€é›†æ ‡å·*/  
+	IntSet s;			/*è¯¥çŠ¶æ€é›†ä¸­çš„dfaçŠ¶æ€å·*/
 };
 
-/*µ±Ç°»®·Ö×ÜÊıÎªcount£¬·µ»Ø×´Ì¬nËùÊôµÄ×´Ì¬¼¯±êºÅi*/
+/*å½“å‰åˆ’åˆ†æ€»æ•°ä¸ºcountï¼Œè¿”å›çŠ¶æ€næ‰€å±çš„çŠ¶æ€é›†æ ‡å·i*/
 int findSetNum(int count, int n)
 {
 	
@@ -637,7 +637,7 @@ int findSetNum(int count, int n)
 	}
 }
 
-/*×îĞ¡»¯DFA*/
+/*æœ€å°åŒ–DFA*/
 DFA minDFA(DFA d)
 {
 	
@@ -645,189 +645,189 @@ DFA minDFA(DFA d)
 	cout<<endl<<"*************     minDFA     **************"<<endl<<endl;
 	
 	DFA minDfa;
-	minDfa.terminator = d.terminator;		/*°ÑdfaµÄÖÕ½á·û¼¯¸³¸øminDfa*/
+	minDfa.terminator = d.terminator;		/*æŠŠdfaçš„ç»ˆç»“ç¬¦é›†èµ‹ç»™minDfa*/
 	
-	memset(minDfa.trans, -1, sizeof(minDfa.trans));		/*³õÊ¼»¯minDfa×ªÒÆ¾ØÕó*/
+	memset(minDfa.trans, -1, sizeof(minDfa.trans));		/*åˆå§‹åŒ–minDfaè½¬ç§»çŸ©é˜µ*/
 	
-	/*×öµÚÒ»´Î»®·Ö£¬¼´½«ÖÕÌ¬Óë·ÇÖÕÌ¬·Ö¿ª*/
-	bool endFlag = true;					/*ÅĞ¶ÏdfaµÄËùÓĞ×´Ì¬ÊÇ·ñÈ«ÎªÖÕÌ¬µÄ±êÖ¾*/ 
-	for(i = 0; i < dfaStateNum; i++)	/*±éÀúdfa×´Ì¬Êı×é*/
+	/*åšç¬¬ä¸€æ¬¡åˆ’åˆ†ï¼Œå³å°†ç»ˆæ€ä¸éç»ˆæ€åˆ†å¼€*/
+	bool endFlag = true;					/*åˆ¤æ–­dfaçš„æ‰€æœ‰çŠ¶æ€æ˜¯å¦å…¨ä¸ºç»ˆæ€çš„æ ‡å¿—*/ 
+	for(i = 0; i < dfaStateNum; i++)	/*éå†dfaçŠ¶æ€æ•°ç»„*/
 	{
-		if(DfaStates[i].isEnd == false)			/*Èç¹û¸Ãdfa×´Ì¬²»ÊÇÖÕÌ¬*/
+		if(DfaStates[i].isEnd == false)			/*å¦‚æœè¯¥dfaçŠ¶æ€ä¸æ˜¯ç»ˆæ€*/
 		{
 
-			endFlag = false;						/*±êÖ¾Ó¦Îªfalse*/
-			minDfaStateNum = 2;						/*µÚÒ»´Î»®·ÖÓ¦¸ÃÓĞÁ½¸ö¼¯ºÏ*/
+			endFlag = false;						/*æ ‡å¿—åº”ä¸ºfalse*/
+			minDfaStateNum = 2;						/*ç¬¬ä¸€æ¬¡åˆ’åˆ†åº”è¯¥æœ‰ä¸¤ä¸ªé›†åˆ*/
 			
-			s[1].insert(DfaStates[i].index);		/*°Ñ¸Ã×´Ì¬µÄ×´Ì¬ºÅ¼ÓÈës[1]¼¯ºÏÖĞ*/
+			s[1].insert(DfaStates[i].index);		/*æŠŠè¯¥çŠ¶æ€çš„çŠ¶æ€å·åŠ å…¥s[1]é›†åˆä¸­*/
 		}
-		else									/*Èç¹û¸Ãdfa×´Ì¬ÊÇÖÕÌ¬*/
+		else									/*å¦‚æœè¯¥dfaçŠ¶æ€æ˜¯ç»ˆæ€*/
 		{
-			s[0].insert(DfaStates[i].index);		/*°Ñ¸Ã×´Ì¬µÄ×´Ì¬ºÅ¼ÓÈës[0]¼¯ºÏÖĞ*/
+			s[0].insert(DfaStates[i].index);		/*æŠŠè¯¥çŠ¶æ€çš„çŠ¶æ€å·åŠ å…¥s[0]é›†åˆä¸­*/
 		}
 	}
 	
-	if(endFlag)					/*Èç¹û±êÖ¾ÎªÕæ£¬ÔòËùÓĞdfa×´Ì¬¶¼ÊÇÖÕÌ¬*/
+	if(endFlag)					/*å¦‚æœæ ‡å¿—ä¸ºçœŸï¼Œåˆ™æ‰€æœ‰dfaçŠ¶æ€éƒ½æ˜¯ç»ˆæ€*/
 	{
-		minDfaStateNum = 1;			/*µÚÒ»´Î»®·Ö½áÊøÓ¦Ö»ÓĞÒ»¸ö¼¯ºÏ*/
+		minDfaStateNum = 1;			/*ç¬¬ä¸€æ¬¡åˆ’åˆ†ç»“æŸåº”åªæœ‰ä¸€ä¸ªé›†åˆ*/
 	}
 	
-	bool cutFlag = true;		/*ÉÏÒ»´ÎÊÇ·ñ²úÉúĞÂµÄ»®·ÖµÄ±êÖ¾*/
-	while(cutFlag)				/*Ö»ÒªÉÏÒ»´Î²úÉúĞÂµÄ»®·Ö¾Í¼ÌĞøÑ­»·*/
+	bool cutFlag = true;		/*ä¸Šä¸€æ¬¡æ˜¯å¦äº§ç”Ÿæ–°çš„åˆ’åˆ†çš„æ ‡å¿—*/
+	while(cutFlag)				/*åªè¦ä¸Šä¸€æ¬¡äº§ç”Ÿæ–°çš„åˆ’åˆ†å°±ç»§ç»­å¾ªç¯*/
 	{
 		
-		int cutCount = 0;			/*ĞèÒª²úÉúĞÂµÄ»®·ÖµÄÊıÁ¿*/
-		for(i = 0; i < minDfaStateNum; i++)			/*±éÀúÃ¿¸ö»®·Ö¼¯ºÏ*/
+		int cutCount = 0;			/*éœ€è¦äº§ç”Ÿæ–°çš„åˆ’åˆ†çš„æ•°é‡*/
+		for(i = 0; i < minDfaStateNum; i++)			/*éå†æ¯ä¸ªåˆ’åˆ†é›†åˆ*/
 		{
 			
 			CharSet::iterator it;
-			for(it = d.terminator.begin(); it != d.terminator.end(); it++)		/*±éÀúdfaµÄÖÕ½á·û¼¯*/
+			for(it = d.terminator.begin(); it != d.terminator.end(); it++)		/*éå†dfaçš„ç»ˆç»“ç¬¦é›†*/
 			{
 				
-				int setNum = 0;				/*µ±Ç°»º³åÇøÖĞµÄ×´Ì¬¼¯¸öÊı*/
-				stateSet temp[20];			/*»®·Ö×´Ì¬¼¯¡°»º³åÇø¡±*/
+				int setNum = 0;				/*å½“å‰ç¼“å†²åŒºä¸­çš„çŠ¶æ€é›†ä¸ªæ•°*/
+				stateSet temp[20];			/*åˆ’åˆ†çŠ¶æ€é›†â€œç¼“å†²åŒºâ€*/
 				
 				IntSet::iterator iter;
-				for(iter = s[i].begin(); iter != s[i].end(); iter++)		/*±éÀú¼¯ºÏÖĞµÄÃ¿¸ö×´Ì¬ºÅ*/
+				for(iter = s[i].begin(); iter != s[i].end(); iter++)		/*éå†é›†åˆä¸­çš„æ¯ä¸ªçŠ¶æ€å·*/
 				{
 					
-					bool epFlag = true;			/*ÅĞ¶Ï¸Ã¼¯ºÏÖĞÊÇ·ñ´æÔÚÃ»ÓĞ¸ÃÖÕ½á·û¶ÔÓ¦µÄ×ª»»»¡µÄ×´Ì¬*/
-					for(j = 0; j < DfaStates[*iter].edgeNum; j++)		/*±éÀú¸Ã×´Ì¬µÄËùÓĞ±ß*/
+					bool epFlag = true;			/*åˆ¤æ–­è¯¥é›†åˆä¸­æ˜¯å¦å­˜åœ¨æ²¡æœ‰è¯¥ç»ˆç»“ç¬¦å¯¹åº”çš„è½¬æ¢å¼§çš„çŠ¶æ€*/
+					for(j = 0; j < DfaStates[*iter].edgeNum; j++)		/*éå†è¯¥çŠ¶æ€çš„æ‰€æœ‰è¾¹*/
 					{
 
-						if(DfaStates[*iter].Edges[j].input == *it)		/*Èç¹û¸Ã±ßµÄÊäÈëÎª¸ÃÖÕ½á·û*/
+						if(DfaStates[*iter].Edges[j].input == *it)		/*å¦‚æœè¯¥è¾¹çš„è¾“å…¥ä¸ºè¯¥ç»ˆç»“ç¬¦*/
 						{
 
-							epFlag = false;			/*Ôò±êÖ¾Îªfalse*/
+							epFlag = false;			/*åˆ™æ ‡å¿—ä¸ºfalse*/
 							
-							/*¼ÆËã¸Ã×´Ì¬×ª»»µ½µÄ×´Ì¬¼¯µÄ±êºÅ*/
+							/*è®¡ç®—è¯¥çŠ¶æ€è½¬æ¢åˆ°çš„çŠ¶æ€é›†çš„æ ‡å·*/
 							int transNum = findSetNum(minDfaStateNum, DfaStates[*iter].Edges[j].Trans);
 						
-							int curSetNum = 0;			/*±éÀú»º³åÇø£¬Ñ°ÕÒÊÇ·ñ´æÔÚµ½´ïÕâ¸ö±êºÅµÄ×´Ì¬¼¯*/
+							int curSetNum = 0;			/*éå†ç¼“å†²åŒºï¼Œå¯»æ‰¾æ˜¯å¦å­˜åœ¨åˆ°è¾¾è¿™ä¸ªæ ‡å·çš„çŠ¶æ€é›†*/
 							while((temp[curSetNum].index != transNum) && (curSetNum < setNum))
 							{
 								curSetNum++;
 							}
 							
-							if(curSetNum == setNum)		/*»º³åÇøÖĞ²»´æÔÚµ½´ïÕâ¸ö±êºÅµÄ×´Ì¬¼¯*/
+							if(curSetNum == setNum)		/*ç¼“å†²åŒºä¸­ä¸å­˜åœ¨åˆ°è¾¾è¿™ä¸ªæ ‡å·çš„çŠ¶æ€é›†*/
 							{
 								
-								/*ÔÚ»º³åÇøÖĞĞÂ½¨Ò»¸ö×´Ì¬¼¯*/
-								temp[setNum].index = transNum;		/*¸Ã×´Ì¬¼¯ËùÄÜ×ª»»µ½µÄ×´Ì¬¼¯±êºÅÎªtransNum*/	
-								temp[setNum].s.insert(*iter);		/*°Ñµ±Ç°×´Ì¬Ìí¼Óµ½¸Ã×´Ì¬¼¯ÖĞ*/
+								/*åœ¨ç¼“å†²åŒºä¸­æ–°å»ºä¸€ä¸ªçŠ¶æ€é›†*/
+								temp[setNum].index = transNum;		/*è¯¥çŠ¶æ€é›†æ‰€èƒ½è½¬æ¢åˆ°çš„çŠ¶æ€é›†æ ‡å·ä¸ºtransNum*/	
+								temp[setNum].s.insert(*iter);		/*æŠŠå½“å‰çŠ¶æ€æ·»åŠ åˆ°è¯¥çŠ¶æ€é›†ä¸­*/
 								
-								setNum++;		/*»º³åÇøÖĞµÄ×´Ì¬¼¯¸öÊı¼ÓÒ»*/
+								setNum++;		/*ç¼“å†²åŒºä¸­çš„çŠ¶æ€é›†ä¸ªæ•°åŠ ä¸€*/
 							}
-							else			/*»º³åÇøÖĞ´æÔÚµ½´ïÕâ¸ö±êºÅµÄ×´Ì¬¼¯*/
+							else			/*ç¼“å†²åŒºä¸­å­˜åœ¨åˆ°è¾¾è¿™ä¸ªæ ‡å·çš„çŠ¶æ€é›†*/
 							{
-								temp[curSetNum].s.insert(*iter);	/*°Ñµ±Ç°×´Ì¬¼ÓÈëµ½¸Ã×´Ì¬¼¯ÖĞ*/
+								temp[curSetNum].s.insert(*iter);	/*æŠŠå½“å‰çŠ¶æ€åŠ å…¥åˆ°è¯¥çŠ¶æ€é›†ä¸­*/
 							}
 						}
 					}
 					
-					if(epFlag)		/*Èç¹û¸Ã×´Ì¬²»´æÔÚÓë¸ÃÖÕ½á·û¶ÔÓ¦µÄ×ª»»»¡*/
+					if(epFlag)		/*å¦‚æœè¯¥çŠ¶æ€ä¸å­˜åœ¨ä¸è¯¥ç»ˆç»“ç¬¦å¯¹åº”çš„è½¬æ¢å¼§*/
 					{
 						
-						/*Ñ°ÕÒ»º³åÇøÖĞÊÇ·ñ´æÔÚ×ª»»µ½±êºÅÎª-1µÄ×´Ì¬¼¯
-						ÕâÀï¹æ¶¨Èç¹û²»´æÔÚ×ª»»»¡£¬ÔòËüËùµ½´ïµÄ×´Ì¬¼¯±êºÅÎª-1*/
+						/*å¯»æ‰¾ç¼“å†²åŒºä¸­æ˜¯å¦å­˜åœ¨è½¬æ¢åˆ°æ ‡å·ä¸º-1çš„çŠ¶æ€é›†
+						è¿™é‡Œè§„å®šå¦‚æœä¸å­˜åœ¨è½¬æ¢å¼§ï¼Œåˆ™å®ƒæ‰€åˆ°è¾¾çš„çŠ¶æ€é›†æ ‡å·ä¸º-1*/
 						int curSetNum = 0;
 						while((temp[curSetNum].index != -1) && (curSetNum < setNum))
 						{
 							curSetNum++;
 						}
 							
-						if(curSetNum == setNum)			/*Èç¹û²»´æÔÚÕâÑùµÄ×´Ì¬¼¯*/
+						if(curSetNum == setNum)			/*å¦‚æœä¸å­˜åœ¨è¿™æ ·çš„çŠ¶æ€é›†*/
 						{
 							
-							/*ÔÚ»º³åÇøÖĞĞÂ½¨Ò»¸ö×´Ì¬¼¯*/
-							temp[setNum].index = -1;			/*¸Ã×´Ì¬¼¯×ªÒÆµ½µÄ×´Ì¬¼¯±êºÅÎª-1*/
-							temp[setNum].s.insert(*iter);		/*°Ñµ±Ç°×´Ì¬¼ÓÈëµ½¸Ã×´Ì¬¼¯ÖĞ*/
+							/*åœ¨ç¼“å†²åŒºä¸­æ–°å»ºä¸€ä¸ªçŠ¶æ€é›†*/
+							temp[setNum].index = -1;			/*è¯¥çŠ¶æ€é›†è½¬ç§»åˆ°çš„çŠ¶æ€é›†æ ‡å·ä¸º-1*/
+							temp[setNum].s.insert(*iter);		/*æŠŠå½“å‰çŠ¶æ€åŠ å…¥åˆ°è¯¥çŠ¶æ€é›†ä¸­*/
 							
-							setNum++;		/*»º³åÇøÖĞµÄ×´Ì¬¼¯¸öÊı¼ÓÒ»*/
+							setNum++;		/*ç¼“å†²åŒºä¸­çš„çŠ¶æ€é›†ä¸ªæ•°åŠ ä¸€*/
 						}
-						else			/*»º³åÇøÖĞ´æÔÚµ½´ïÕâ¸ö±êºÅµÄ×´Ì¬¼¯*/
+						else			/*ç¼“å†²åŒºä¸­å­˜åœ¨åˆ°è¾¾è¿™ä¸ªæ ‡å·çš„çŠ¶æ€é›†*/
 						{
-							temp[curSetNum].s.insert(*iter);	/*°Ñµ±Ç°×´Ì¬¼ÓÈëµ½¸Ã×´Ì¬¼¯ÖĞ*/
+							temp[curSetNum].s.insert(*iter);	/*æŠŠå½“å‰çŠ¶æ€åŠ å…¥åˆ°è¯¥çŠ¶æ€é›†ä¸­*/
 						}
 					}	
 				}
 				
-				if(setNum > 1)	/*Èç¹û»º³åÇøÖĞµÄ×´Ì¬¼¯¸öÊı´óÓÚ1£¬±íÊ¾Í¬Ò»¸ö×´Ì¬¼¯ÖĞµÄÔªËØÄÜ×ª»»µ½²»Í¬µÄ×´Ì¬¼¯£¬ÔòĞèÒª»®·Ö*/
+				if(setNum > 1)	/*å¦‚æœç¼“å†²åŒºä¸­çš„çŠ¶æ€é›†ä¸ªæ•°å¤§äº1ï¼Œè¡¨ç¤ºåŒä¸€ä¸ªçŠ¶æ€é›†ä¸­çš„å…ƒç´ èƒ½è½¬æ¢åˆ°ä¸åŒçš„çŠ¶æ€é›†ï¼Œåˆ™éœ€è¦åˆ’åˆ†*/
 				{
 					
-					cutCount++;		/*»®·Ö´ÎÊı¼ÓÒ»*/
+					cutCount++;		/*åˆ’åˆ†æ¬¡æ•°åŠ ä¸€*/
 					
-					/*ÎªÃ¿×é»®·Ö´´½¨ĞÂµÄdfa×´Ì¬*/
-					for(j = 1; j < setNum; j++)		/*±éÀú»º³åÇø£¬ÕâÀï´Ó1¿ªÊ¼ÊÇ½«µÚ0×é»®·ÖÁôÔÚÔ­¼¯ºÏÖĞ*/
+					/*ä¸ºæ¯ç»„åˆ’åˆ†åˆ›å»ºæ–°çš„dfaçŠ¶æ€*/
+					for(j = 1; j < setNum; j++)		/*éå†ç¼“å†²åŒºï¼Œè¿™é‡Œä»1å¼€å§‹æ˜¯å°†ç¬¬0ç»„åˆ’åˆ†ç•™åœ¨åŸé›†åˆä¸­*/
 					{
 						
 						IntSet::iterator t;
 						for(t = temp[j].s.begin(); t != temp[j].s.end(); t++)
 						{
 							
-							s[i].erase(*t);						/*ÔÚÔ­À´µÄ×´Ì¬¼¯ÖĞÉ¾³ı¸Ã×´Ì¬*/
-							s[minDfaStateNum].insert(*t);		/*ÔÚĞÂµÄ×´Ì¬¼¯ÖĞ¼ÓÈë¸Ã×´Ì¬*/
+							s[i].erase(*t);						/*åœ¨åŸæ¥çš„çŠ¶æ€é›†ä¸­åˆ é™¤è¯¥çŠ¶æ€*/
+							s[minDfaStateNum].insert(*t);		/*åœ¨æ–°çš„çŠ¶æ€é›†ä¸­åŠ å…¥è¯¥çŠ¶æ€*/
 						}
 						
-						minDfaStateNum++;		/*×îĞ¡»¯DFA×´Ì¬×ÜÊı¼ÓÒ»*/
+						minDfaStateNum++;		/*æœ€å°åŒ–DFAçŠ¶æ€æ€»æ•°åŠ ä¸€*/
 					}
 				}
 			}	
 		}
 		
-		if(cutCount == 0)		/*Èç¹ûĞèÒª»®·ÖµÄ´ÎÊıÎª0£¬±íÊ¾±¾´Î²»ĞèÒª½øĞĞ»®·Ö*/
+		if(cutCount == 0)		/*å¦‚æœéœ€è¦åˆ’åˆ†çš„æ¬¡æ•°ä¸º0ï¼Œè¡¨ç¤ºæœ¬æ¬¡ä¸éœ€è¦è¿›è¡Œåˆ’åˆ†*/
 		{
 			cutFlag = false;
 		}
 	}
 	
-	/*±éÀúÃ¿¸ö»®·ÖºÃµÄ×´Ì¬¼¯*/
+	/*éå†æ¯ä¸ªåˆ’åˆ†å¥½çš„çŠ¶æ€é›†*/
 	for(i = 0; i < minDfaStateNum; i++)
 	{
 		
 		IntSet::iterator y;
-		for(y = s[i].begin(); y != s[i].end(); y++)		/*±éÀú¼¯ºÏÖĞµÄÃ¿¸öÔªËØ*/
+		for(y = s[i].begin(); y != s[i].end(); y++)		/*éå†é›†åˆä¸­çš„æ¯ä¸ªå…ƒç´ */
 		{
 			
-			if(*y == d.startState)			/*Èç¹ûµ±Ç°×´Ì¬ÎªdfaµÄ³õÌ¬£¬Ôò¸Ã×îĞ¡»¯DFA×´Ì¬Ò²Îª³õÌ¬*/
+			if(*y == d.startState)			/*å¦‚æœå½“å‰çŠ¶æ€ä¸ºdfaçš„åˆæ€ï¼Œåˆ™è¯¥æœ€å°åŒ–DFAçŠ¶æ€ä¹Ÿä¸ºåˆæ€*/
 			{
 				minDfa.startState = i;
 			}
 			
-			if(d.endStates.count(*y))		/*Èç¹ûµ±Ç°×´Ì¬ÊÇÖÕÌ¬£¬Ôò¸Ã×îĞ¡»¯DFA×´Ì¬Ò²ÎªÖÕÌ¬*/
+			if(d.endStates.count(*y))		/*å¦‚æœå½“å‰çŠ¶æ€æ˜¯ç»ˆæ€ï¼Œåˆ™è¯¥æœ€å°åŒ–DFAçŠ¶æ€ä¹Ÿä¸ºç»ˆæ€*/
 			{
 				
 				minDfaStates[i].isEnd = true;
-				minDfa.endStates.insert(i);		/*½«¸Ã×îĞ¡»¯DFA×´Ì¬¼ÓÈëÖÕÌ¬¼¯ÖĞ*/
+				minDfa.endStates.insert(i);		/*å°†è¯¥æœ€å°åŒ–DFAçŠ¶æ€åŠ å…¥ç»ˆæ€é›†ä¸­*/
 			}
 			
-			for(j = 0; j < DfaStates[*y].edgeNum; j++)		/*±éÀú¸ÃDFA×´Ì¬µÄÃ¿Ìõ»¡£¬Îª×îĞ¡»¯DFA´´½¨»¡*/
+			for(j = 0; j < DfaStates[*y].edgeNum; j++)		/*éå†è¯¥DFAçŠ¶æ€çš„æ¯æ¡å¼§ï¼Œä¸ºæœ€å°åŒ–DFAåˆ›å»ºå¼§*/
 			{
 
-				/*±éÀú»®·ÖºÃµÄ×´Ì¬¼¯ºÏ£¬ÕÒ³ö¸Ã»¡×ªÒÆµ½µÄ×´Ì¬ÏÖÔÚÊôÓÚÄÄ¸ö¼¯ºÏ*/
+				/*éå†åˆ’åˆ†å¥½çš„çŠ¶æ€é›†åˆï¼Œæ‰¾å‡ºè¯¥å¼§è½¬ç§»åˆ°çš„çŠ¶æ€ç°åœ¨å±äºå“ªä¸ªé›†åˆ*/
 				for(int t = 0; t < minDfaStateNum; t++)
 				{
 					if(s[t].count(DfaStates[*y].Edges[j].Trans))
 					{
 						
-						bool haveEdge = false;		/*ÅĞ¶Ï¸Ã»¡ÊÇ·ñÒÑ¾­´´½¨µÄ±êÖ¾*/
-						for(int l = 0; l < minDfaStates[i].edgeNum; l++)	/*±éÀúÒÑ´´½¨µÄ»¡*/
-						{					/*Èç¹û¸Ã»¡ÒÑ¾­´æÔÚ*/
+						bool haveEdge = false;		/*åˆ¤æ–­è¯¥å¼§æ˜¯å¦å·²ç»åˆ›å»ºçš„æ ‡å¿—*/
+						for(int l = 0; l < minDfaStates[i].edgeNum; l++)	/*éå†å·²åˆ›å»ºçš„å¼§*/
+						{					/*å¦‚æœè¯¥å¼§å·²ç»å­˜åœ¨*/
 							if((minDfaStates[i].Edges[l].input == DfaStates[*y].Edges[j].input) && (minDfaStates[i].Edges[l].Trans == t))
 							{
-								haveEdge = true;		/*±êÖ¾ÎªÕæ*/
+								haveEdge = true;		/*æ ‡å¿—ä¸ºçœŸ*/
 							}
 						}
 						
-						if(!haveEdge)		/*Èç¹û¸Ã»¡²»´æÔÚ£¬Ôò´´½¨Ò»ÌõĞÂµÄ»¡*/
+						if(!haveEdge)		/*å¦‚æœè¯¥å¼§ä¸å­˜åœ¨ï¼Œåˆ™åˆ›å»ºä¸€æ¡æ–°çš„å¼§*/
 						{
 							
-							minDfaStates[i].Edges[minDfaStates[i].edgeNum].input = DfaStates[*y].Edges[j].input;	/*»¡µÄÖµÓëDFAµÄÏàÍ¬*/
-							minDfaStates[i].Edges[minDfaStates[i].edgeNum].Trans = t;	/*¸Ã»¡×ªÒÆµ½µÄ×´Ì¬ÎªÕâ¸ö×´Ì¬¼¯µÄ±êºÅ*/
+							minDfaStates[i].Edges[minDfaStates[i].edgeNum].input = DfaStates[*y].Edges[j].input;	/*å¼§çš„å€¼ä¸DFAçš„ç›¸åŒ*/
+							minDfaStates[i].Edges[minDfaStates[i].edgeNum].Trans = t;	/*è¯¥å¼§è½¬ç§»åˆ°çš„çŠ¶æ€ä¸ºè¿™ä¸ªçŠ¶æ€é›†çš„æ ‡å·*/
 							
-							minDfa.trans[i][DfaStates[*y].Edges[j].input - 'a'] = t;	/*¸üĞÂ×ªÒÆ¾ØÕó*/
+							minDfa.trans[i][DfaStates[*y].Edges[j].input - 'a'] = t;	/*æ›´æ–°è½¬ç§»çŸ©é˜µ*/
 							
-							minDfaStates[i].edgeNum++;		/*¸Ã×´Ì¬µÄ»¡µÄÊıÄ¿¼ÓÒ»*/
+							minDfaStates[i].edgeNum++;		/*è¯¥çŠ¶æ€çš„å¼§çš„æ•°ç›®åŠ ä¸€*/
 						}
 
 						break;
@@ -844,9 +844,9 @@ void printMinDFA(DFA d)
 {
 	
 	int i, j;
-	cout<<"minDFA×Ü¹²ÓĞ"<<minDfaStateNum<<"¸ö×´Ì¬£¬"<<"³õÌ¬Îª"<<d.startState<<endl<<endl;
+	cout<<"minDFAæ€»å…±æœ‰"<<minDfaStateNum<<"ä¸ªçŠ¶æ€ï¼Œ"<<"åˆæ€ä¸º"<<d.startState<<endl<<endl;
 	
-	cout<<"ÓĞÇî×ÖÄ¸±íÎª£û ";
+	cout<<"æœ‰ç©·å­—æ¯è¡¨ä¸ºï½› ";
 	set<char>::iterator it;
 	for(it = d.terminator.begin(); it != d.terminator.end(); it++)
 	{
@@ -854,7 +854,7 @@ void printMinDFA(DFA d)
 	}
 	cout<<'}'<<endl<<endl;
 	
-	cout<<"ÖÕÌ¬¼¯Îª£û "; 
+	cout<<"ç»ˆæ€é›†ä¸ºï½› "; 
 	IntSet::iterator iter;
 	for(iter = d.endStates.begin(); iter != d.endStates.end(); iter++)
 	{
@@ -862,7 +862,7 @@ void printMinDFA(DFA d)
 	}
 	cout<<'}'<<endl<<endl;
 	
-	cout<<"×ªÒÆº¯ÊıÎª£º"<<endl;
+	cout<<"è½¬ç§»å‡½æ•°ä¸ºï¼š"<<endl;
 	for(i = 0; i < minDfaStateNum; i++)
 	{
 		for(j = 0; j < minDfaStates[i].edgeNum; j++)
@@ -882,7 +882,7 @@ void printMinDFA(DFA d)
 		cout<<endl;
 	}
 	
-	cout<<endl<<"×ªÒÆ¾ØÕóÎª£º"<<endl<<"     ";
+	cout<<endl<<"è½¬ç§»çŸ©é˜µä¸ºï¼š"<<endl<<"     ";
 	CharSet::iterator t;
 	for(t = d.terminator.begin(); t != d.terminator.end(); t++)
 	{
@@ -926,14 +926,14 @@ void printMinDFA(DFA d)
 int main()
 {
 	
-	/*²âÊÔÑùÀı1 
+	/*æµ‹è¯•æ ·ä¾‹1 
 	string str = "(a|b)*abb";*/
 	
-	/*²âÊÔÑùÀı2*/
+	/*æµ‹è¯•æ ·ä¾‹2*/
 	string str = "(a|b*)c*";
-	str = infixToSuffix(str);		/*½«ÖĞ×º±í´ïÊ½×ª»»Îªºó×º±í´ïÊ½*/
+	str = infixToSuffix(str);		/*å°†ä¸­ç¼€è¡¨è¾¾å¼è½¬æ¢ä¸ºåç¼€è¡¨è¾¾å¼*/
 
-	/***³õÊ¼»¯ËùÓĞµÄÊı×é***/
+	/***åˆå§‹åŒ–æ‰€æœ‰çš„æ•°ç»„***/
 	int i, j;
 	for(i = 0; i < MAX; i++)
 	{
